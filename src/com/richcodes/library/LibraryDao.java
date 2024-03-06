@@ -2,10 +2,7 @@ package com.richcodes.library;
 
 import com.richcodes.books.Book;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class LibraryDao {
@@ -26,12 +23,10 @@ public class LibraryDao {
             return Optional.empty();
         }
         return  Optional.empty();
-
     }
 
-    public List<Book> deleteBookByAuthorAndTitle(String title, String author){
-//  getBooks().removeIf(s -> s.getTitle().equalsIgnoreCase(title) && s.getAuthor().equalsIgnoreCase(author));
 
+    public List<Book> deleteBookByAuthorAndTitle(String title, String author){
         books = books.stream()
                 .filter(book -> !(book.getTitle().equalsIgnoreCase(title) && book.getAuthor().equalsIgnoreCase(author)))
                 .collect(Collectors.toList());
@@ -51,6 +46,14 @@ public class LibraryDao {
         }else{
             System.out.println("Book not found with title '" + title + "' and author '" + author + "'");
         }
+
+    }
+
+    public List<Book> availableBooks() {
+        return books.stream()
+                .filter(book -> !book.isBorrowed())
+                .toList();
+
     }
 
 

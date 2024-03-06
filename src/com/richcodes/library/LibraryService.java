@@ -37,6 +37,14 @@ public class LibraryService {
             System.out.println("Field cannot be Empty");
         }
         libraryDao.updateBookByTitle(title,author,updatedBook);
+    }
+
+    public  void  getAvailableBooks(){
+        if (libraryDao.availableBooks().isEmpty()){
+            System.out.println("No Available Books");
+        }
+        libraryDao.availableBooks().forEach(System.out::println);
 
     }
+
 }

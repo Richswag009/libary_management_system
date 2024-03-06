@@ -14,7 +14,10 @@ public class Main {
 //        Scanner scanner = new Scanner(System.in);
 //        String choice = scanner.nextLine();
 //        userService.getUserByUsername(choice);
+        System.out.println("--------------------------");
         LibraryService libraryService = new LibraryService();
+        libraryService.getAvailableBooks();
+        System.out.println("---------------");
         libraryService.addBooks("hello","title", new Date(1 / 1995));
         libraryService.addBooks("how are u","titles", new Date(1 / 1995));
         libraryService.getAllBooks();
@@ -23,9 +26,14 @@ public class Main {
         libraryService.getBookByTitle("titled");
         libraryService.removeBooksById("title","john snow");
         libraryService.getAllBooks();
+        System.out.println("---------------");
         Book updateBook = new Book("the subtle art to not giving a fuck","ryan Holiday",new Date(12/5/1990));
         libraryService.updateBook("hello","title",updateBook);
         libraryService.getAllBooks();
+        System.out.println("---------------");
+
+        libraryService.getAvailableBooks();
+        System.out.println("---------------");
     }
 
 
