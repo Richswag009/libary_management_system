@@ -1,10 +1,8 @@
 package com.richcodes.library;
 
 import com.richcodes.books.Book;
-import com.richcodes.user.User;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,8 +11,8 @@ public class LibraryDao {
 
     private List<Book> books = new ArrayList<>();
 
-    public void addBooks( String title, String author, Date publishDate){
-        books.add(new Book(title,author,publishDate));
+    public void addBooks( String title, String author, String ISBN){
+        books.add(new Book(title,author,ISBN));
     }
     public List<Book> getBooks(){
         return books;
@@ -25,7 +23,7 @@ public class LibraryDao {
                 return Optional.of(book);
             }
         }
-        return  null;
+        return Optional.empty();
 
     }
 
@@ -57,13 +55,6 @@ public class LibraryDao {
         return books.stream()
                 .filter(book -> !book.isBorrowed())
                 .toList();
-
-    }
-
-
-    public void borrowBook(String title, User user){
-        findBookByTitle(title);
-
     }
 
 

@@ -3,18 +3,20 @@ package com.richcodes.library;
 
 import com.richcodes.books.Book;
 
-import java.util.Date;
 import java.util.Optional;
 
 public class LibraryService {
     public final LibraryDao libraryDao= new LibraryDao();
 
-    public void addBooks(String title,String author, Date publishDate){
-        libraryDao.addBooks( title, author, publishDate);
+    public void addBooks(String title,String author, String ISBN){
+        libraryDao.addBooks( title, author, ISBN);
         System.out.println("added books successfully");
     }
 
     public void getAllBooks(){
+        if(libraryDao.getBooks().isEmpty()){
+            System.out.println("NO Books Added yet");
+        }
         libraryDao.getBooks().forEach(System.out::println);
     }
 

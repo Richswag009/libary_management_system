@@ -8,20 +8,19 @@ public class Book {
     private String name;
     private String title;
     private String author ;
+    private  String ISBN;
 
     private Date datePublished;
     private boolean isBorrowed;
 
-    public Book(String title, String author, Date datePublished) {
-
+    public Book(String title, String author ,String ISBN) {
         this.title = title;
         this.author = author;
-        this.datePublished = datePublished;
+        this.ISBN = ISBN;
         this.isBorrowed =false;
     }
 
-    public Book(String name, String title, String author) {
-        this.name = name;
+    public Book( String title, String author) {
         this.title = title;
         this.author = author;
     }
@@ -70,13 +69,17 @@ public class Book {
         isBorrowed = borrowed;
     }
 
+    public String getISBN() {
+        return ISBN;
+    }
+
     @Override
     public String toString() {
         return "Books{" +
 
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
-                ", datePublished=" + datePublished +
+                ", ISBN=" + ISBN +
                 ", isBorrowed=" + isBorrowed +
                 '}';
     }
@@ -88,11 +91,12 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book books = (Book) o;
-        return isBorrowed == books.isBorrowed && Objects.equals(title, books.title) && Objects.equals(author, books.author) && Objects.equals(datePublished, books.datePublished);
+        return isBorrowed == books.isBorrowed && Objects.equals(title, books.title) && Objects.equals(ISBN, books.ISBN) && Objects.equals(author, books.author) && Objects.equals(datePublished, books.datePublished);
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( title, author, datePublished, isBorrowed);
+        return Objects.hash( title, author, datePublished,ISBN,isBorrowed);
     }
 }

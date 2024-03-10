@@ -2,6 +2,7 @@ package com.richcodes.Circulation;
 
 import com.richcodes.IDGenerator.IDGenerator;
 import com.richcodes.books.Book;
+import com.richcodes.librarian.Librarian;
 import com.richcodes.user.User;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 public class Circulation {
     private final User user;
+    private  Librarian librarian;
     private final Book book;
     private final Date dateCreated;
     private final IDGenerator idGenerator = new IDGenerator();
