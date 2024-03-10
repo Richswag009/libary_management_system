@@ -9,6 +9,7 @@ public class UserService {
     public void getAllUsers(){
           userDao.getUsers().forEach(System.out::println);
     }
+
     public  Optional<User> getUserByUsername(String username){
         Optional<User> userOptional = Optional.ofNullable(userDao.findUser(username));
         userOptional.ifPresentOrElse(

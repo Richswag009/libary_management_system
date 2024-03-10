@@ -1,19 +1,18 @@
 package com.richcodes.user;
 
 
+import com.richcodes.books.Book;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 public class UserFileData implements UserDao {
-    private  User[] user;
-    @Override
+    private final List<User> users = new ArrayList<>();
+    private List<Book> books;
     public List<User> getUsers(){
         File file = new File("src/com/richcodes/users.csv");
-        List<User> users = new ArrayList<>();
+
         try {
             Scanner    scanner = new Scanner(file);
             while(scanner.hasNext()){
@@ -34,12 +33,16 @@ public class UserFileData implements UserDao {
     public User findUser(String username) {
 //        this.getUsers().stream().filter(s->s.getUsername().equalsIgnoreCase(username)).map(User::getUsername)
         for (var user: getUsers()){
-            System.out.println(user.getUsername()+"," + username);
             if(user.getUsername().equalsIgnoreCase(username)){
                 return user;
             }
         }
         return  null;
+    }
+
+    public void borrowBook(String username, String title, String author){
+        findUser(username);
+
     }
 
 

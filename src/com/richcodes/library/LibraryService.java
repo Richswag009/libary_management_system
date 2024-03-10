@@ -4,6 +4,7 @@ package com.richcodes.library;
 import com.richcodes.books.Book;
 
 import java.util.Date;
+import java.util.Optional;
 
 public class LibraryService {
     public final LibraryDao libraryDao= new LibraryDao();
@@ -17,10 +18,12 @@ public class LibraryService {
         libraryDao.getBooks().forEach(System.out::println);
     }
 
-    public  void getBookByTitle(String title){
-        libraryDao.findBookByTitle(title)
-                .ifPresentOrElse(book -> System.out.println("found book \n" + book),
-                        ()-> System.out.println("\u001b[31" + "book was not found"));
+    public  Optional<Book> getBookByTitle(String title){
+        Optional<Book> book = (libraryDao.findBookByTitle(title));
+        book.
+                ifPresentOrElse(books -> System.out.println("found book \n" + books),
+                        ()-> System.out.println("book was not found or dosen`t exist"));
+     return book;
     }
 
     public  void removeBooksById(String title, String author){

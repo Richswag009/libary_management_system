@@ -1,8 +1,12 @@
 package com.richcodes.library;
 
 import com.richcodes.books.Book;
+import com.richcodes.user.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class LibraryDao {
@@ -20,9 +24,9 @@ public class LibraryDao {
             if (book.getTitle().equalsIgnoreCase(title)){
                 return Optional.of(book);
             }
-            return Optional.empty();
         }
-        return  Optional.empty();
+        return  null;
+
     }
 
 
@@ -53,6 +57,12 @@ public class LibraryDao {
         return books.stream()
                 .filter(book -> !book.isBorrowed())
                 .toList();
+
+    }
+
+
+    public void borrowBook(String title, User user){
+        findBookByTitle(title);
 
     }
 
