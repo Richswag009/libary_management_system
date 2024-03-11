@@ -11,7 +11,7 @@ public class Account {
     private  User user;
     private  Book book;
     private LocalDateTime dateCreated;
-    private LocalDateTime returningDate;
+    private final LocalDateTime returningDate;
     private final IDGenerator idGenerator = new IDGenerator();
     private  String borrowingID;
 

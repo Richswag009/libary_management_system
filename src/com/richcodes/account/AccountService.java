@@ -24,6 +24,9 @@ public class AccountService {
     }
 
     public List<Account> getBorrowedBooks(){
+        if (accountDao.getBorrowedBooks().isEmpty()){
+            System.out.println("No book has been borrowed yet");
+        }
        return accountDao.getBorrowedBooks();
     }
 
@@ -52,7 +55,7 @@ public class AccountService {
         if(getUser.isPresent()){
             User user = getUser.get();
             if ((accountDao.getUserBorrowedBook(user).isEmpty())){
-                System.out.println("User dosent have any borrowed books");
+                System.out.println("User doesn't have any borrowed books");
             }
             accountDao.getUserBorrowedBook(user).forEach(System.out::println);
         }

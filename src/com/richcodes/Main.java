@@ -2,6 +2,7 @@ package com.richcodes;
 
 import com.richcodes.account.AccountDao;
 import com.richcodes.account.AccountService;
+import com.richcodes.books.Book;
 import com.richcodes.librarian.Librarian;
 import com.richcodes.library.LibraryService;
 import com.richcodes.user.UserService;
@@ -9,10 +10,10 @@ import com.richcodes.user.UserService;
 import java.util.Scanner;
 
 public class Main {
-    private UserService userService = new UserService();
-    private LibraryService libraryService;
-    private AccountService accountService;
-    private Librarian librarian;
+    private final UserService userService;
+    private final LibraryService libraryService;
+    private final AccountService accountService;
+    private final Librarian librarian;
 
     public Main(UserService userService, LibraryService libraryService, AccountDao accountDao, Librarian librarian) {
         this.userService = userService;
@@ -51,51 +52,21 @@ public class Main {
                     System.out.println("invalid input");
             }
 
-//        userService.getAllUsers();
-
-//        Scanner scanner = new Scanner(System.in);
-//        String choice = scanner.nextLine();
-//        userService.getUserByUsername(choice);
-//        System.out.println("--------------------------");
-//
-//        libraryService.getAvailableBooks();
-//        System.out.println("---------------");
-//        libraryService.addBooks("hello","title", new Date(1 / 1995));
-//        libraryService.addBooks("how are u","titles", new Date(1 / 1995));
-//        libraryService.getAllBooks();
-//        libraryService.addBooks("All Nigerians Men Are mad","title", new Date(7 / 1995));
-//        libraryService.getAllBooks();
-//        libraryService.getBookByTitle("hello");
-//        libraryService.removeBooksById("title","john snow");
-//        libraryService.getAllBooks();
-//        System.out.println("---------------");
-//        Book updateBook = new Book("the subtle art to not giving a fuck","ryan Holiday",new Date(12/5/1990));
-//        libraryService.updateBook("hello","title",updateBook);
-//        libraryService.getAllBooks();
-//        System.out.println("---------------");
-//        libraryService.getAvailableBooks();
-//        System.out.println("---------------");
-//
-//        accountService.borrowBooks("olin.veum","All Nigerians Men Are mad");
-//        accountService.borrowBooks("olin.veum","how are u");
-//        System.out.println("---------");
-//        accountService.getBorrowedBooks().forEach(System.out::println);
-//        System.out.println("------ ends here");
-//        accountService.getUserBorrowedBooks("olin.veum");
-//        System.out.println("-".repeat(20));
-//        accountService.getUserBorrowedBooks("joesph.ohara");
-//
-//        System.out.println("-".repeat(30));
-//        accountService.returnBook("olin.veum","ESL0001");
-
     }
 
     private void userMenu(){
         Scanner scanner = new Scanner(System.in);
         while(true) {
-            System.out.println(" 1⃣ - get all books");
-            System.out.println(" 2⃣ - Search Book by title ");
-            System.out.println(" 3⃣ - Exit the Program ");
+            System.out.println();
+            System.out.println("""
+                    1⃣ - Get books
+                    2⃣ - Search Book by title
+                    3⃣ - Get All Available Books
+                    4⃣ - Borrow Book
+                    5⃣ - Return book
+                    6⃣ - Get All Borrowed Books
+                    7⃣ - Exit Program
+                    """);
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -107,6 +78,18 @@ public class Main {
                     searchBookByTitle();
                     break;
                 case 3:
+                    getAvailableBooks();
+                    break;
+                case 4:
+                    borrowBook();
+                    break;
+                case 5:
+                    returnBook();
+                    break;
+                case 6:
+                    getBorrowedBooks();
+                    break;
+                case 7:
                     System.out.println("existing the program");
                     return;
                 default:
@@ -128,10 +111,18 @@ public class Main {
             return;
         }
         while (true) {
-            System.out.println(" 1⃣ - Add book");
-            System.out.println(" 2⃣ - Get All Books ");
-            System.out.println(" 3⃣ - Search Book by title ");
-            System.out.println(" 3⃣ - Exit the Program ");
+            System.out.println();
+            System.out.println("""
+                    1⃣ - Add book
+                    2⃣ - Get All Books
+                    3⃣ - Search Book by title
+                    4⃣ - Get All Available Books
+                    5⃣ - Remove Book
+                    6⃣ - Update Book by title
+                    7⃣ - Get All Borrowed Books
+                    7⃣ - Get User Borrowed Books
+                    9⃣ - Exit Program
+                    """);
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -143,9 +134,25 @@ public class Main {
                     getAllBooks();
                     break;
                 case 3:
-                  searchBookByTitle();
+                    searchBookByTitle();
                     break;
                 case 4:
+                    getAvailableBooks();
+                    break;
+                case 5:
+                    removeBook();
+                    break;
+                case 6:
+                    updateBook();
+                    break;
+                case 7:
+                    getAllBorrowedBooks();
+                    break;
+                case 8:
+                    getAUserBorrowedBooks();
+                    break;
+                case 9:
+                    System.out.println("existing the program .......");
                     return;
                 default:
                     System.out.println("invalid input");
@@ -154,7 +161,7 @@ public class Main {
 
     }
 
-    /////user
+    ///// User Functions
     private void getBooks(){
        libraryService.getAvailableBooks();
         System.out.println("-".repeat(20));
@@ -165,6 +172,35 @@ public class Main {
         libraryService.getBookByTitle(title);
         System.out.println("-".repeat(20));
     }
+    private void borrowBook(){
+        Scanner titleScanner = new Scanner(System.in);
+        Scanner authorScanner = new Scanner(System.in);
+        System.out.println("Please enter The title of the book");
+        String title = titleScanner.nextLine();
+        System.out.println("Please enter The Author of the book");
+        String author = authorScanner.nextLine();
+        accountService.borrowBooks(title,author);
+    }
+    private void returnBook(){
+        Scanner usernameScanner = new Scanner(System.in);
+        Scanner borrowingIdScanner = new Scanner(System.in);
+        System.out.println("Please enter your username");
+        String user = usernameScanner.nextLine();
+        System.out.println("Please enter The Author of the book");
+        String borrowingID = borrowingIdScanner.nextLine();
+        accountService.returnBook(user,borrowingID);
+    }
+
+    private void getBorrowedBooks(){
+        Scanner usernameScanner = new Scanner(System.in);
+        System.out.println("Please enter your username");
+        String user = usernameScanner.nextLine();
+        accountService.getUserBorrowedBooks(user);
+    }
+    /*
+    Users functions ends here
+     */
+
 
     /*
     librarian functions
@@ -184,6 +220,52 @@ public class Main {
 
     private void getAllBooks(){
         libraryService.getAllBooks();
+    }
+
+    private void getAvailableBooks(){
+        libraryService.getAvailableBooks();
+    }
+
+    private void removeBook(){
+        Scanner titleScanner = new Scanner(System.in);
+        Scanner authorScanner = new Scanner(System.in);
+        System.out.println("please enter the tile of the book u want to remove");
+        String title = titleScanner.nextLine();
+        System.out.println("please enter the tile of the book u want to remove");
+        String author = authorScanner.nextLine();
+        libraryService.removeBooksById(title,author);
+    }
+
+    private void updateBook(){
+        Scanner titleScanner = new Scanner(System.in);
+        Scanner authorScanner = new Scanner(System.in);
+        System.out.println("please enter the tile of the book u want to Update");
+        String title = titleScanner.nextLine();
+        System.out.println("please enter the tile of the book u want to remove");
+        String author = authorScanner.nextLine();
+
+        // scanners for the updated book
+        Scanner newTitleScanner = new Scanner(System.in);
+        Scanner newAuthorScanner = new Scanner(System.in);
+        Scanner bookIsbn = new Scanner(System.in);
+        System.out.println("please enter the new title of the book u are updating");
+        String newTitle = newTitleScanner.nextLine();
+        System.out.println("please enter the Author of the book u want to Update");
+        String newAuthor = newAuthorScanner.nextLine();
+        System.out.println("please enter the ISBN of the book u want to Update");
+        String ISBN = bookIsbn.nextLine();
+        Book updatedBook = new Book(newTitle,newAuthor,ISBN);
+        libraryService.updateBook(title,author,updatedBook);
+    }
+
+    private void getAllBorrowedBooks(){
+        accountService.getBorrowedBooks();
+    }
+    private void getAUserBorrowedBooks(){
+        Scanner usernameScanner = new Scanner(System.in);
+        System.out.println("Please enter your username");
+        String user = usernameScanner.nextLine();
+        accountService.getUserBorrowedBooks(user);
     }
 
 
